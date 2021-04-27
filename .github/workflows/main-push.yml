@@ -1,0 +1,11 @@
+name: Github Main Push and Test
+on:
+  push:
+    branches: [main]
+jobs:
+  push_to_main:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+      - run: go test
