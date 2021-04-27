@@ -6,6 +6,12 @@ jobs:
   push_to_main:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Set up go environment
+        uses: actions/setup-go@v2
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v2.5.2
+      - name: Run go-mnd
+        uses: tommy-muehle/go-mnd@master
       - run: go test

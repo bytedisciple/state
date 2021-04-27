@@ -24,13 +24,13 @@ func TestNewIntState(t *testing.T) {
 func TestIntManyCallbacks(t *testing.T){
 	intState := NewInt("myTestIntState")
 
-	size := 100
+	size := 5
 
 	bools := make([]bool, size)
 	funcs := make([]func(oldValue, newValue int), size)
 
 
-	for i, _ := range funcs {
+	for i := range funcs {
 		logger.Infof("Creating function at position %v", i)
 		// Must be reallocated in order to keep i from incrementing in the func below
 		newIndex := i
