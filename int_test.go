@@ -21,7 +21,7 @@ func TestNewIntState(t *testing.T) {
 	is.Set(1)
 }
 
-func TestIntManyCallbacks(t *testing.T){
+func TestIntManyCallbacks(t *testing.T) {
 	intState := NewInt("myTestIntState")
 
 	size := 5
@@ -29,14 +29,13 @@ func TestIntManyCallbacks(t *testing.T){
 	bools := make([]bool, size)
 	funcs := make([]func(oldValue, newValue int), size)
 
-
 	for i := range funcs {
 		logger.Infof("Creating function at position %v", i)
 		// Must be reallocated in order to keep i from incrementing in the func below
 		newIndex := i
 		funcs[newIndex] = func(oldValue, newValue int) {
-			 logger.Debugf("Running on position %v - %v", newIndex, &newIndex)
-			 bools[newIndex] = true
+			logger.Debugf("Running on position %v - %v", newIndex, &newIndex)
+			bools[newIndex] = true
 		}
 
 		intState.Sub(&funcs[i])
@@ -45,7 +44,7 @@ func TestIntManyCallbacks(t *testing.T){
 	intState.Set(1)
 
 	for i, v := range bools {
-		if !v{
+		if !v {
 			t.Errorf("Position %v was not set to true!", i)
 		}
 	}
@@ -59,7 +58,7 @@ func TestName(t *testing.T) {
 	}
 }
 
-func TestIntUnsub(t *testing.T){
+func TestIntUnsub(t *testing.T) {
 	is := NewInt("int1")
 	counter := 0
 
@@ -69,13 +68,13 @@ func TestIntUnsub(t *testing.T){
 
 	is.Sub(&f1)
 	is.Set(1)
-	if counter != 1{
+	if counter != 1 {
 		t.Error("Inner callback function not run")
 	}
 
 	is.Unsub(&f1)
 	is.Set(2)
-	if counter != 1{
+	if counter != 1 {
 		t.Error("Counter should still be 1, callback should have been unregistered!")
 	}
 
@@ -95,7 +94,6 @@ func TestOverrideFunc(t *testing.T) {
 	if counter != 1 {
 		t.Error("f1 should have been overridden with its 2nd form that subtracts!")
 	}
-
 
 	f1 = func(oldValue, newValue int) {
 		counter -= newValue

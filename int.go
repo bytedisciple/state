@@ -16,14 +16,14 @@ type Int interface {
 
 // intState private internal int representation
 type intState struct {
-	i int
+	i    int
 	name string
 	subs map[uintptr]func(oldValue, newValue int)
 }
 
-func NewInt(name string) Int{
+func NewInt(name string) Int {
 	return intState{
-		i: 0,
+		i:    0,
 		name: name,
 		subs: map[uintptr]func(oldValue int, newValue int){},
 	}
@@ -37,7 +37,7 @@ func (i intState) Name() string {
 	return i.name
 }
 
-func (i intState) Set(newValue int)  {
+func (i intState) Set(newValue int) {
 	oldValue := i.i
 	for key, val := range i.subs {
 		logger.Debugf("Running update function on callback [%v] for object %v", key, i.name)
@@ -50,20 +50,22 @@ func (i intState) Set(newValue int)  {
 // This function uses the memory address of the function as a key for the internal map.
 // For this reason it accepts a pointer to the function as to not allow anonymous functions
 // which would all have the same memory address.
-func (i intState) Sub(onChange *func(oldValue, newValue int))  {
+func (i intState) Sub(onChange *func(oldValue, newValue int)) {
 	key := uintptr(unsafe.Pointer(onChange))
 
-	_, exists := i.subs[key]; if exists{
+	_, exists := i.subs[key]
+	if exists {
 		logger.Debugf("Key %v exists for object %s, overriding with new function", key, i.name)
 	}
 
 	i.subs[key] = *onChange
 }
 
-func (i intState) Unsub(onChange *func(oldValue, newValue int))  {
+func (i intState) Unsub(onChange *func(oldValue, newValue int)) {
 	key := uintptr(unsafe.Pointer(onChange))
 
-	_, exists := i.subs[key]; if exists{
+	_, exists := i.subs[key]
+	if exists {
 		logger.Debugf("Key %v exists for object %s, deleting", key, i.name)
 	}
 
