@@ -12,6 +12,4 @@ jobs:
         uses: actions/setup-go@v2
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v2.5.2
-      - name: Run go-mnd
-        uses: tommy-muehle/go-mnd@master
       - run: go test
