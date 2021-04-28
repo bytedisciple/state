@@ -67,5 +67,5 @@ func (i intState) Unsub(onChange *func(oldValue, newValue int))  {
 		logger.Debugf("Key %v exists for object %s, deleting", key, i.name)
 	}
 
-	i.subs[key] = nil
+	delete(i.subs, key)
 }
