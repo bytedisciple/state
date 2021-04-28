@@ -89,22 +89,21 @@ func TestOverrideFunc(t *testing.T) {
 		counter += newValue
 	}
 
-	f1 = func(oldValue, newValue int) {
-		counter -= newValue
-	}
-
 	is.Sub(&f1)
 	is.Set(1)
 
-	if counter != -1 {
+	if counter != 1 {
 		t.Error("f1 should have been overridden with its 2nd form that subtracts!")
 	}
 
-	// Has no effect
-	is.Sub(&f1)
+
+	f1 = func(oldValue, newValue int) {
+		counter -= newValue
+	}
+	is.Sub(&f1) //No effect actually
 	is.Set(1)
 
-	if counter != -2 {
+	if counter != 0 {
 		t.Error("f1 should have been overridden with its 2nd form that subtracts!")
 	}
 }
