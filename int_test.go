@@ -1,6 +1,7 @@
 package state
 
 import (
+	"fmt"
 	"github.com/bytedisciple/logger"
 	"testing"
 )
@@ -103,5 +104,14 @@ func TestOverrideFunc(t *testing.T) {
 
 	if counter != 0 {
 		t.Error("f1 should have been overridden with its 2nd form that subtracts!")
+	}
+}
+
+func TestChange(t *testing.T) {
+	is := NewInt("int1")
+	is.Set(1)
+	fmt.Println(is.Get())
+	if is.Get() != 1{
+		t.Error("is should have been 1")
 	}
 }
